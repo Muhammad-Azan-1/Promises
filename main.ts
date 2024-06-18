@@ -44,7 +44,7 @@ let promise2: Promise<void> = new Promise((resolve, reject) => {
   setTimeout(() => {
     console.log("TASK IS COMPLETED ");
     resolve();
-  }, 2000);
+  }, 3000);
 });
 
 promise2.then(() => {
@@ -66,7 +66,7 @@ let promise3: Promise<void> = new Promise((resolve, reject) => {
   setTimeout(() => {
     console.log("TASK IS NOT COMPLETED");
     reject();
-  }, 2000);
+  }, 4000);
 });
 
 promise3.catch(() => {
@@ -89,7 +89,7 @@ let promise4: Promise<string> = new Promise((resolve, reject) => {
     console.log("TASK  IS COMPLETED");
 
     resolve("Successfully"); // We can also pass any value to resolve() this value can be access in parameter of .then((value:string) =>{}) fun
-  }, 2000);
+  }, 5000);
 });
 
 promise4.then((value: string) => {
@@ -103,7 +103,7 @@ let promise5: Promise<string> = new Promise((resolve, reject) => {
     console.log("TASK IS NOT COMPLETED");
 
     reject("Successfully"); // We can also pass any value to resolve() this value can be access in parameter of .then((value:string) =>{}) fun
-  }, 2000);
+  }, 6000);
 });
 
 promise5.catch((value: string) => {
@@ -124,7 +124,7 @@ let promise6 = new Promise((resolve, reject) => {
       Email: "MuhammadAzan@gmail.com",
       password: "XXXXXX",
     }); // we know that we can pass any value to resolve so here we are passing an Object
-  }, 2000);
+  }, 7000);
 });
 
 promise6.then((object) =>{
@@ -155,7 +155,7 @@ let promise7:any = new Promise((resolve, reject)=>{
             }
            
 
-        },2000)
+        },8000) 
        
 });
 
@@ -187,6 +187,7 @@ promise7.then((object:any)=>{
 
 //------------------------------------------------------------------------------------------------------------------------------------------------
 
+//9)
 function funpromise(){
 
     return new Promise((resolve, reject) => {
@@ -194,16 +195,45 @@ function funpromise(){
         setTimeout(()=>{
             console.log("DATA1")
             resolve("Data1 fetched successfully ")
-        },4000)
+        },7000)
     });
 };
 
 console.log("Fetching data1...")
 let returnPromise = funpromise()
-
 returnPromise.then((res)=>{
     console.log(res)
 })
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
+
+//10)
+let Promise8 = new Promise((resolve,reject)=>{
+
+  setTimeout(()=>{
+
+    let error1 = false;
+
+    if(!error1){
+      resolve({userName:"Azan",Password:1234})
+    }else{
+      reject("ERROR : SOME THING WENT WRONG")
+    }
+
+  },9000)
+})
+
+async function myFunc(){
+  try{let value = await Promise8
+
+  console.log(value)
+
+  }catch(error){                                // if promise resolved try executed if promise reject catch executed
+
+    console.log(error)
+  }
+}
+
+myFunc()
+
