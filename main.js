@@ -1,14 +1,4 @@
-"use strict";
 // //1) Definition:
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 // //Promise in javascript is the eventual completion or failuer of a Task . it is a solution to to call back hell, it is and object i  JS
 // //2) Three states of Promise:
 // //1 = Pending: The initial state, neither fulfilled nor rejected.
@@ -143,28 +133,91 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 // returnPromise.then((res)=>{
 //     console.log(res)
 // })
-//----------------------------------------------------------------------------------------------------------------------------------------------------
-//10)
-let Promise8 = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        let error1 = false;
-        if (!error1) {
-            resolve({ userName: "Azan", Password: 1234 });
-        }
-        else {
-            reject("ERROR : SOME THING WENT WRONG");
-        }
-    }, 9000);
-});
-function myFunc() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            let value = yield Promise8;
-            console.log(value);
-        }
-        catch (error) { // if promise resolved try executed if promise reject catch executed
-            console.log(error);
-        }
+// //----------------------------------------------------------------------------------------------------------------------------------------------------
+// //10)
+// let Promise8 = new Promise((resolve,reject)=>{
+//   setTimeout(()=>{
+//     let error1 = false;
+//     if(!error1){
+//       resolve({userName:"Azan",Password:1234})
+//     }else{
+//       reject("ERROR : SOME THING WENT WRONG")
+//     }
+//   },9000)
+// })
+// async function myFunc(){
+//   try{
+//     let value = await Promise8
+//   console.log(value)
+//   }catch(error){                                // if promise resolved try executed if promise reject catch executed
+//     console.log(error)
+//   }
+// }
+// myFunc()
+// making wahsing machine by Promises
+// function promise(value:string, anotherVal:string){
+//   return new Promise((res,rej)=>{
+//     console.log(`${value} start...`)
+//     setTimeout(()=>{
+//      res(anotherVal)
+//     },2000)
+//   })
+// }
+// promise("Washing","Washing Done!").then((value)=>{
+//   console.log(value)
+//   promise("Soaking","Soaking Done!").then((value2)=>{
+//     console.log(value2)
+//     promise("Drying","drying Done").then((value3)=>{
+//         console.log(value3)
+//     })
+//   })
+// })
+//another way
+function washing() {
+    return new Promise((res, rej) => {
+        console.log("Washing Started...");
+        setTimeout(() => {
+            res("washing Done");
+        }, 5000);
     });
 }
-myFunc();
+function soaking() {
+    return new Promise((res, rej) => {
+        console.log("soaking  Started...");
+        setTimeout(() => {
+            res("washing Done");
+        }, 4000);
+    });
+}
+function drying() {
+    return new Promise((res, rej) => {
+        console.log("drying  Started...");
+        setTimeout(() => {
+            res("Drying Done");
+        }, 2000);
+    });
+}
+// washing().then((value)=>{
+//   console.log(value)
+//     soaking().then((value)=>{
+//       console.log(value)
+//       drying().then((value)=>{
+//         console.log(value)
+//       })
+//     })
+// })
+//A better way to handle the promise
+washing().then((value) => {
+    console.log(value); //  res("washing Done")
+    return soaking(); //as function soaking call  , after 4 seconds promise resolve and return to the soaking() , then we return soaking()it means 
+    //soaking() is return to the another .then() method and soaking has a promise inside it so if the the promise is resolved then ,
+    // the another .then() will executed and inside its parameter it conatians th value which passed in resolved promise
+}).then((value) => {
+    console.log(value); //   res("washing Done")
+    return drying();
+}).then((value) => {
+    console.log(value); //  res("Drying Done")
+}).finally(() => {
+    console.log("Finally everything is done");
+});
+export {};
